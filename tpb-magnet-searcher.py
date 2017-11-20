@@ -55,8 +55,6 @@ def getMagnet (stdscr):
 
     print_hud (stdscr, keyword, lista, mode)
 
-    stdscr.getkey()
-
 
     while True:
         c = stdscr.getch()
@@ -76,6 +74,7 @@ def getMagnet (stdscr):
                 mode = 1
                 print_hud (stdscr, keyword, lista, mode)
                 lista = searchTor(keyword)
+                sel = 0
                 print_hud (stdscr, keyword, lista, mode)
         elif c == curses.KEY_UP and mode:
             if sel > 0:
