@@ -104,7 +104,26 @@ def getMagnet (stdscr):
 magnet = curses.wrapper(getMagnet)
 
 if magnet:
-    print (magnet)
+    command = []
+    peerflix = input ("wanna open on peerflix (using mplayer)? (Y/n)")
+    peerflix = 1 if peerflix == '' or peerflix == 'y' or peerfix == 'Y' else 0
+    
+    if peerflix:
+        command.append('peerflix')
+        command.append(magnet)
+        command.append('-m')
+
+        sub = input ("path sub: (blank for nothing)")
+    
+        sub = 0 if sub == '' else 1
+
+        if sub:
+            command.append('-t')
+            command.append(sub)
+
+        subprocess.call(command)
+    else:
+        print (magnet)
     
 
 
