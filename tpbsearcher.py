@@ -1,7 +1,8 @@
 import curses
-import subprocess
+import subprocess, os
 from tpb import TPB
 from tpb import CATEGORIES, ORDERS
+import simplefm
 
 t = TPB('https://thepiratebay.org')
 
@@ -106,20 +107,20 @@ magnet = curses.wrapper(getMagnet)
 if magnet:
     command = []
     peerflix = input ("wanna open on peerflix (using mplayer)? (Y/n)")
-    peerflix = 1 if peerflix == '' or peerflix == 'y' or peerfix == 'Y' else 0
+    peerflix = 1 if peerflix == '' or peerflix == 'y' or peerflix == 'Y' else 0
     
     if peerflix:
         command.append('peerflix')
         command.append(magnet)
         command.append('-m')
 
-        sub = input ("path sub: (blank for nothing)")
+        sub = input ("sub? (Yn)")
     
-        sub = 0 if sub == '' else 1
+        sub = 1 if sub == '' or sub == 'y' or sub == 'Y' else 0
 
         if sub:
             command.append('-t')
-            command.append(sub)
+            command.append(curses.wrapper(simplefm.file_selector))
 
         subprocess.call(command)
     else:
