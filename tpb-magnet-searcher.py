@@ -30,14 +30,15 @@ def print_search (win, keyword, mode):
         win.addstr (0, len(keyword), " " * (width - len(keyword)))
     
     win.addstr(0, 0, keyword)
+    win.move(0, len(keyword))
     
     if mode == 0:
         win.attroff(curses.color_pair(2))
 
 def print_hud (stdscr, keyword, lista, mode):
     stdscr.clear()
-    print_search(stdscr, keyword, mode)
     print_list (stdscr, lista)
+    print_search(stdscr, keyword, mode)
     stdscr.refresh()
 
 def getMagnet (stdscr):
@@ -59,16 +60,21 @@ def getMagnet (stdscr):
 
     while True:
         c = stdscr.getch()
+
         if c == 27:
             if mode:
+                curses.curs_set(1)
                 mode = 0
+                print_hud (stdscr, keyword, lista, mode)
             else:
                 return 0
         elif c == 10:
             if mode:
                 return lista[sel]['torrent'].magnet_link
             else:
+                curses.curs_set(0) 
                 mode = 1
+                print_hud (stdscr, keyword, lista, mode)
                 lista = searchTor(keyword)
                 print_hud (stdscr, keyword, lista, mode)
         elif c == curses.KEY_UP and mode:
